@@ -406,8 +406,13 @@ int libvlc_video_set_subtitle_file( libvlc_media_player_t *p_mi,
         char* psz_mrl = vlc_path2uri( psz_subtitle, NULL );
         if( psz_mrl )
         {
+#if VLC_WINSTORE_APP
+            if( !input_AddSlave( p_input_thread, SLAVE_TYPE_SPU, psz_mrl,
+                                 false, false, false ) )
+#else
             if( !input_AddSlave( p_input_thread, SLAVE_TYPE_SPU, psz_mrl,
                                  true, false, false ) )
+#endif
                 b_ret = true;
             free( psz_mrl );
         }
