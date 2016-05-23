@@ -38,6 +38,9 @@ ifdef HAVE_MACOSX
 endif
 	$(APPLY) $(SRC)/gnutls/gnutls-libidn.patch
 	$(APPLY) $(SRC)/gnutls/vasnprintf-android-no-percent-n.patch
+ifdef HAVE_WINSTORE
+	$(APPLY) $(SRC)/gnutls/winstore.patch
+endif
 	$(call pkg_static,"lib/gnutls.pc.in")
 	$(UPDATE_AUTOCONFIG)
 	$(MOVE)
