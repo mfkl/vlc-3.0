@@ -43,6 +43,7 @@ ifdef HAVE_WIN32
 endif
 ifdef HAVE_WINSTORE
 	$(APPLY) $(SRC)/mpg123/winstore.patch
+	$(APPLY) $(SRC)/mpg123/mpg123-winstore.patch
 endif
 	$(MOVE)
 
