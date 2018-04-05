@@ -910,6 +910,45 @@ static std::string GetVencVPXOption( sout_stream_t * /* p_stream */,
     return "venc=vpx{quality-mode=1}";
 }
 
+static std::string GetVencQSVH264Option( sout_stream_t * /* p_stream */,
+                                         const video_format_t * /* p_vid */,
+                                         int i_quality )
+{
+    std::stringstream ssout;
+    static const char video_target_usage_quality[]  = "quality";
+    static const char video_target_usage_balanced[] = "balanced";
+    static const char video_target_usage_speed[]    = "speed";
+    static const char video_bitrate_high[] = "vb=8000000";
+    static const char video_bitrate_low[]  = "vb=3000000";
+    const char *psz_video_target_usage;
+    const char *psz_video_bitrate;
+
+    switch ( i_quality )
+    {
+        case CONVERSION_QUALITY_HIGH:
+            psz_video_target_usage = video_target_usage_quality;
+            psz_video_bitrate = video_bitrate_high;
+            break;
+        case CONVERSION_QUALITY_MEDIUM:
+            psz_video_target_usage = video_target_usage_balanced;
+            psz_video_bitrate = video_bitrate_high;
+            break;
+        case CONVERSION_QUALITY_LOW:
+            psz_video_target_usage = video_target_usage_balanced;
+            psz_video_bitrate = video_bitrate_low;
+            break;
+        default:
+        case CONVERSION_QUALITY_LOWCPU:
+            psz_video_target_usage = video_target_usage_speed;
+            psz_video_bitrate = video_bitrate_low;
+            break;
+    }
+
+    ssout << "venc=qsv{target-usage=" << psz_video_target_usage <<
+             "}," << psz_video_bitrate;
+    return ssout.str();
+}
+
 static std::string GetVencX264Option( sout_stream_t * /* p_stream */,
                                       const video_format_t *p_vid,
                                       int i_quality )
@@ -956,6 +995,7 @@ static struct
     vlc_fourcc_t fcc;
     std::string (*get_opt)( sout_stream_t *, const video_format_t *, int);
 } venc_opt_list[] = {
+    { .fcc = VLC_CODEC_H264, .get_opt = GetVencQSVH264Option },
     { .fcc = VLC_CODEC_H264, .get_opt = GetVencX264Option },
     { .fcc = VLC_CODEC_VP8,  .get_opt = GetVencVPXOption },
     { .fcc = VLC_CODEC_H264, .get_opt = NULL },
