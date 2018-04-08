@@ -1,0 +1,11 @@
+--- libarchive/libarchive/archive_cryptor_private.h	2018-04-08 15:24:33.160610700 +0200
++++ libarchive/libarchive/archive_cryptor_private.h.mingw64	2018-04-08 15:23:30.040523400 +0200
+@@ -64,7 +64,7 @@ typedef struct {
+ } archive_crypto_ctx;
+ 
+ #elif defined(_WIN32) && !defined(__CYGWIN__) && defined(HAVE_BCRYPT_H)
+-#include <Bcrypt.h>
++#include <bcrypt.h>
+ 
+ /* Common in other bcrypt implementations, but missing from VS2008. */
+ #ifndef BCRYPT_SUCCESS

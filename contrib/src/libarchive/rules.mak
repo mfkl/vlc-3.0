@@ -20,6 +20,7 @@ libarchive: libarchive-$(LIBARCHIVE_VERSION).tar.gz .sum-libarchive
 ifdef HAVE_ANDROID
 	$(APPLY) $(SRC)/libarchive/android.patch
 endif
+	$(APPLY) $(SRC)/libarchive/libarchive-mingw64-case.patch
 ifdef HAVE_WINSTORE
 	$(APPLY) $(SRC)/libarchive/no-windows-files.patch
 	$(APPLY) $(SRC)/libarchive/libarchive-win32-bcrypt.patch
