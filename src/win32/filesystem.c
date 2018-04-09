@@ -339,6 +339,15 @@ int vlc_socket (int pf, int type, int proto, bool nonblock)
 
     if (nonblock)
         ioctlsocket (fd, FIONBIO, &(unsigned long){ 1 });
+
+#if VLC_WINSTORE_APP
+    /* the pool() can crash on WSAEnumNetworkEvents() when we use closesocket() */
+    struct linger dolin;
+    dolin.l_onoff = 1;
+    dolin.l_linger = 10;
+    setsockopt((SOCKET)fd, SOL_SOCKET, SO_LINGER, (char*)&dolin, sizeof(dolin));
+#endif
+
     return fd;
 }
 
