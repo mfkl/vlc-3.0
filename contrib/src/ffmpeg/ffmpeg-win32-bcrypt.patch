@@ -57,3 +57,15 @@
      HCRYPTPROV provider;
      if (CryptAcquireContext(&provider, NULL, NULL, PROV_RSA_FULL,
                              CRYPT_VERIFYCONTEXT | CRYPT_SILENT)) {
+--- ffmpeg/libavutil/random_seed.c.old	2018-04-09 12:05:53.366206339 +0200
++++ ffmpeg/libavutil/random_seed.c	2018-04-09 12:05:15.826207672 +0200
+@@ -27,6 +27,9 @@
+ #include <io.h>
+ #endif
+ #if HAVE_BCRYPT
++#if _WIN32
++#include <windows.h>
++#endif
+ #include <bcrypt.h>
+ #elif HAVE_WINCRYPT
+ #include <windows.h>
