@@ -249,6 +249,8 @@ ifdef USE_LIBAV
 	$(APPLY) $(SRC)/ffmpeg/libav_gsm.patch
 endif
 	$(APPLY) $(SRC)/ffmpeg/ffmpeg-win32-bcrypt.patch
+	$(APPLY) $(SRC)/ffmpeg/ffmpeg-winrt-wincrypt.patch
+
 	$(MOVE)
 
 .ffmpeg: ffmpeg
