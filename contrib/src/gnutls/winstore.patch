@@ -450,3 +450,21 @@
  #include <wincrypt.h>
  
  #include <winapifamily.h>
+--- gnutls/lib/nettle/sysrng-windows.c.orig	2018-04-10 15:57:09.972920851 +0200
++++ gnutls/lib/nettle/sysrng-windows.c	2018-04-10 15:57:35.308919952 +0200
+@@ -35,6 +35,7 @@
+ #include <wincrypt.h>
+ #else /* WINAPI_PARTITION_APP */
+ #include <bcrypt.h>
++#ifndef WINSTORECOMPAT
+ typedef BCRYPT_ALG_HANDLE HCRYPTPROV;
+ #define PROV_RSA_FULL 0
+ #define CRYPT_SILENT 0
+@@ -55,6 +56,7 @@
+ {
+     return BCRYPT_SUCCESS(BCryptCloseAlgorithmProvider(handle, 0));
+ }
++#endif
+ #endif /* WINAPI_PARTITION_APP */
+ 
+ #include "gnutls_int.h"
