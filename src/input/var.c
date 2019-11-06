@@ -140,6 +140,8 @@ void input_ControlVarInit ( input_thread_t *p_input )
 
     var_Create( p_input, "frame-next", VLC_VAR_VOID );
 
+    var_Create( p_input, "force-equirectangular", VLC_VAR_BOOL | VLC_VAR_DOINHERIT );
+
     /* Position */
     var_Create( p_input, "position",  VLC_VAR_FLOAT );
 
